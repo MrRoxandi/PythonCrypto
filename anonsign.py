@@ -58,8 +58,8 @@ class MainServerT:
         self._d = numeric.m_inverse(self._c, fi)
 
     def vote(self, user: User) -> None:
-        if user.get_vote() == 0 or user.get_sing() != 0:
-            return
+        if self.is_voted(user):
+            raise "You already voted\n"
         r: int = numeric.generate_number(1, self._n - 1)
         while numeric.gcd(r, self._n) != 1:
             r: int = numeric.generate_number(1, self._n - 1)
@@ -82,3 +82,23 @@ class MainServerT:
 
     def get_n(self) -> int:
         return self._n
+
+    def is_voted(self, user: User) -> bool:
+        s = user.get_sing()
+        for item in self._votes:
+            if item[1] == s:
+                return True
+            else: continue
+        return False
+    
+    def calculate_votes(self, users: list[User], candidates: list[Candidate]) -> list[Candidate]:
+        results: list[Candidate] = []
+        for user in users:
+            if self.is_voted(user):
+                h = (user.get_vote()) % (1 << 512)
+                for candidate in candidates:
+                    if h != int(hashlib.sha3_512(candidate.get_name().encode()).hexdigest(), 16):
+                        continue
+                    else: results.append(candidate)
+            else: continue
+        return results
