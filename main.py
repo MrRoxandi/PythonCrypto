@@ -9,15 +9,15 @@ server = anonsign.MainServerT()
 alice = anonsign.User()
 bob = anonsign.User()
 
-alice.vote(candidates[3])
-bob.vote(candidates[2])
+alice.vote = candidates[3]
+bob.vote = candidates[2]
 
-server.vote(alice)
-server.vote(bob)
+server.add_vote(alice)
+server.add_vote(bob)
 
 res = server.calculate_votes([alice, bob], candidates)
 
 for candidate in candidates:
-    print(f"{candidate.get_name()}: [{res.count(candidate)}]")
+    print(f"{candidate.name}: [{res.count(candidate)}]")
 
 print("Done")
