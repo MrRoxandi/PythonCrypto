@@ -8,16 +8,20 @@ candidates = [anonsign.Candidate("John"),
 server = anonsign.MainServerT()
 alice = anonsign.User()
 bob = anonsign.User()
+martin = anonsign.User()
 
 alice.vote = candidates[3]
 bob.vote = candidates[2]
+martin.vote = candidates[3]
 
 server.add_vote(alice)
 server.add_vote(bob)
+server.add_vote(martin)
 
-res = server.calculate_votes([alice, bob], candidates)
+res = server.calculate_votes(candidates)
 
-for candidate in candidates:
-    print(f"{candidate.name}: [{res.count(candidate)}]")
+for item in res:
+    print(f"{item[0]} : [{item[1]}]")
 
 print("Done")
+
