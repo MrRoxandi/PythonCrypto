@@ -6,13 +6,14 @@ candidates = [anonsign.Candidate("John"),
               anonsign.Candidate("Vova")]
 
 server = anonsign.MainServerT()
-alice = anonsign.User()
-bob = anonsign.User()
-martin = anonsign.User()
+alice = anonsign.User("Alice")
+bob = anonsign.User("Bob")
+martin = anonsign.User("Martion")
 
 alice.vote = candidates[3]
 bob.vote = candidates[2]
 martin.vote = candidates[3]
+print("-" * 20)
 
 server.add_vote(alice)
 server.add_vote(bob)
@@ -24,4 +25,3 @@ for item in res:
     print(f"{item[0]} : [{item[1]}]")
 
 print("Done")
-
