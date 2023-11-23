@@ -83,7 +83,6 @@ class User:
     def vote(self, person: Candidate) -> None:
         if self.__vote_info != 0:
             raise VoteErrorException(f"User {self.__name} already voted")
-        print(f"{self.__name} -> [{person.name}]")
         hash_num = person.hash
         self.__vote_info = (hash_num << 512) + self.__rnd
 

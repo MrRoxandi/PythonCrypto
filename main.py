@@ -1,4 +1,5 @@
 import anonsign
+import secrets
 
 candidates = [anonsign.Candidate("John"),
               anonsign.Candidate("Mitch"),
@@ -6,18 +7,19 @@ candidates = [anonsign.Candidate("John"),
               anonsign.Candidate("Vova")]
 
 server = anonsign.MainServerT()
-alice = anonsign.User("Alice")
-bob = anonsign.User("Bob")
-martin = anonsign.User("Martion")
+users = [anonsign.User("Alice"),
+         anonsign.User("Bob"),
+         anonsign.User("Martion"),
+         anonsign.User("Ivan"),
+         anonsign.User("Vlad"),
+         anonsign.User("Valerd"),
+         anonsign.User("Max")]
 
-alice.vote = candidates[3]
-bob.vote = candidates[2]
-martin.vote = candidates[3]
+for user in users:
+    user.vote = secrets.choice(candidates)
+    server.add_vote(user)
+
 print("-" * 20)
-
-server.add_vote(alice)
-server.add_vote(bob)
-server.add_vote(martin)
 
 res = server.calculate_votes(candidates)
 
